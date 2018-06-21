@@ -10,10 +10,14 @@ const Student = require('../models/studentmodel');
 const HOD = require('../models/hodmodel');
 const TPO = require('../models/tpomodel');
 const multer = require('multer');
+var nodemailer = require('nodemailer');
 var crypto=require('crypto');
 var mime=require('mime');
 var path=require('path');
 var DIR = './public/uploads/';
+
+var useremail;
+var userpassword;
 
 const storage = multer.diskStorage({
   destination: function(req, image, cb) {
@@ -24,7 +28,7 @@ const storage = multer.diskStorage({
     // crypto.pseudoRandomBytes(16, function (err, raw) {
     //   cb(null, raw.toString('hex') + Date.now() + '.' + mime.getExtension(image.mimetype));
     // });
-    crypto.pseudoRandomBytes(16, function (err, raw) {
+    crypto.pseudoRandomBytes(6, function (err, raw) {
       if (err) return cb(err)
 
       cb(null, raw.toString('hex') + path.extname(image.originalname));
@@ -124,6 +128,7 @@ router.post('/adduser',function(req,res,next){
   var newuser = new User();
   newuser.userid =req.body.userid;
   newuser.password =req.body.password;
+  userpassword =req.body.password;
   newuser.role =req.body.role;
   // User.addUser(newuser, function(err,user){
   //       if(err){
@@ -160,6 +165,8 @@ router.post('/adduser',function(req,res,next){
     //roleUser.password =req.body.password;
     roleUser.role = req.body.role;
     roleUser.dept = req.body.dept;
+    roleUser.email = req.body.email;
+    useremail = req.body.email;
     User.addUser(newuser, function(err,user){
       if(err){
         console.log(err);
@@ -180,6 +187,45 @@ router.post('/adduser',function(req,res,next){
           }
           else{
             res.json({success:true , msg:"success in add HOD."});
+            const output = `<p>Dear ${req.body.role}</p>
+                            <h3>Login Credentials</h3>
+                            <p>Please find your Login Credentials to CMS Account is</p>
+                            <ul>  
+                              <li>First Name: ${req.body.userid}</li>
+                              <li>Last Name: ${req.body.password}</li>
+                            </ul>
+                            <h5>Note:</h5>
+                            <p>Please Don't Share these credentials with anyone</p>`;
+            let transporter = nodemailer.createTransport({
+              service: 'gmail',
+              secure: false,
+              port: 25,
+                  auth: {
+                  user: 'cms.feedback9144@gmail.com', // generated ethereal user
+                  pass: 'password.9144'  // generated ethereal password
+              },
+              tls:{
+                rejectUnauthorized:false
+              }
+            });
+          
+            // setup email data with unicode symbols
+            let mailOptions = {
+                from: '"college manager" <cms.feedback9144@gmail.com>', // sender address
+                to: useremail,
+                subject: 'CMS Credentials', // Subject line
+                html: output // html body
+            };
+          
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log("The message was sent!");
+                console.log(info);
+                //res.json({"msg":"Mail Sent Successfully","succcess":"true"});
+                });
           }
         });
       }
@@ -190,6 +236,8 @@ router.post('/adduser',function(req,res,next){
     roleUser.userid =req.body.userid;
     //roleUser.password =req.body.password;
     roleUser.role = req.body.role;
+    roleUser.email = req.body.email;
+    useremail = req.body.email;
     User.addUser(newuser, function(err,user){
       if(err){
         res.json({success:false , msg:"UserID Already Exist in users."});
@@ -199,6 +247,46 @@ router.post('/adduser',function(req,res,next){
             res.json({success:false , msg:"add TPO failed."});
           }else{
             res.json({success:true , msg:"success in add TPO."});
+            const output = `<p>Dear ${req.body.role}</p>
+                            <h3>Login Credentials</h3>
+                            <p>Please find your Login Credentials to CMS Account is</p>
+                            <ul>  
+                              <li>User Name: ${req.body.userid}</li>
+                              <li>Password: ${req.body.password}</li>
+                            </ul>
+                            <h5>Note:</h5>
+                            <p>Please Don't Share these credentials with anyone</p>`;
+            let transporter = nodemailer.createTransport({
+              service: 'gmail',
+              secure: false,
+              port: 25,
+                  auth: {
+                  user: 'cms.feedback9144@gmail.com', // generated ethereal user
+                  pass: 'password.9144'  // generated ethereal password
+              },
+              tls:{
+                rejectUnauthorized:false
+              }
+            });
+          
+            // setup email data with unicode symbols
+            let mailOptions = {
+                from: '"college manager" <cms.feedback9144@gmail.com>', // sender address
+                to: useremail,
+                subject: 'CMS Credentials', // Subject line
+                html: output // html body
+            };
+          
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log("The message was sent!");
+                console.log(info);
+                //res.json({"msg":"Mail Sent Successfully","succcess":"true"});
+                });
+
           }
         });
       }

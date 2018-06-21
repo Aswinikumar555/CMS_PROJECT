@@ -229,7 +229,7 @@ router.post('/reset/:token', function(req, res) {
             from: 'cms.feedback9144@gmail.com',
             subject: 'Your password has been changed',
             text: 'Hello,\n\n' +
-            'This is a confirmation that the password for your account with userid is: <b> ' + user.userid + ' </b> has just been changed.\n'
+            'This is a confirmation that the password for your account with userid  :   +<b> ' + user.userid + '  </b> has just been changed.\n'
         };
         smtpTransport.sendMail(mailOptions, function(err) {
             res.json({success: true, msg: 'Success! Your password has been changed.'});

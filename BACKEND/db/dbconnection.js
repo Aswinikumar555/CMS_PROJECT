@@ -1,5 +1,6 @@
 var authentication = require('../config/db.json');
-var server = true;
+var server = true; // To use Mlab global Server
+//var server = false; //To use Local Mongo Database
 var mongodbHost = '127.0.0.1';
 var mongodbPort = '27017';
 

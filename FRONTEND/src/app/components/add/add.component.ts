@@ -14,6 +14,7 @@ export class AddComponent implements OnInit {
   password: string;
   role: String;
   dept: String;
+  email:String;
 
   constructor(
     private validateService:ValidateService,
@@ -29,7 +30,8 @@ export class AddComponent implements OnInit {
       userid: this.userid,
       password: this.password,
       role: this.role,
-      dept: this.dept
+      dept: this.dept,
+      email:this.email
     };
     if(!this.validateService.validateAddFields(obj)){
       this.flashmessage.show('All fields are required',{cssClass:'alert-danger text-center',timeOut:2000});
@@ -54,6 +56,12 @@ export class AddComponent implements OnInit {
 
   isStudentOrHod(){
     if(this.role=='student'||this.role=='hod')
+      return true;
+    else
+      return false;
+  }
+  isTpoOrHod(){
+    if(this.role=='tpo'||this.role=='hod')
       return true;
     else
       return false;
