@@ -62,6 +62,18 @@
 
 <!--student dashboard-->
 
+<div *ngIf="authService.adminLoggedIn()">
+  <h1 class="h1 mb-1 text-center font-weight-normal text-white" style="padding:10px;">Admin Welcome to your Dashboard</h1><br>
+  <h2 class="h2 mb-2 text-center font-weight-normal text-white">Your having Rights to Perform following Operations:</h2><br>
+  <ul class="text-center font-weight-normal text-white" style="list-style-type: none;">
+    <li>Add Users(HOD,TPO,STUDENTS)</li>
+    <li>Delete Students</li>
+    <li>Search Students</li>
+    <li>Change Password</li>
+  </ul>
+</div>
+
+
 <div *ngIf="authService.studentLoggedIn()||authService.hodLoggedIn()||authService.tpoLoggedIn()">
     <!-- <div class="body">
       <div align="center">

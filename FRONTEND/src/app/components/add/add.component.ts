@@ -53,7 +53,6 @@ export class AddComponent implements OnInit {
       });
     }
   }
-
   isStudentOrHod(){
     if(this.role=='student'||this.role=='hod')
       return true;
@@ -66,5 +65,10 @@ export class AddComponent implements OnInit {
     else
       return false;
   }
-
+  isStudentOrAdmin(){
+    if(this.role=='student'||this.role=='admin')
+      return true;
+    else
+      return false;
+  }
 }

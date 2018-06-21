@@ -11,6 +11,8 @@ const HOD = require('../models/hodmodel');
 const TPO = require('../models/tpomodel');
 const multer = require('multer');
 var nodemailer = require('nodemailer');
+var randomstring = require("randomstring");
+var upperCase = require('upper-case')
 var crypto=require('crypto');
 var mime=require('mime');
 var path=require('path');
@@ -128,8 +130,14 @@ router.post('/adduser',function(req,res,next){
   var newuser = new User();
   newuser.userid =req.body.userid;
   newuser.password =req.body.password;
-  userpassword =req.body.password;
   newuser.role =req.body.role;
+  userpassword =newuser.password;
+  if(newuser.role=="hod"|| newuser.role=="tpo"){
+    newuser.password=randomstring.generate({length: 8,charset: 'alphanumeric'});;
+    userpassword=newuser.password;
+  }
+  console.log(userpassword);
+  console.log(newuser.password);
   // User.addUser(newuser, function(err,user){
   //       if(err){
   //         res.json({success:false , msg:"UserID Already Exist in users."});
@@ -188,13 +196,13 @@ router.post('/adduser',function(req,res,next){
           else{
             res.json({success:true , msg:"success in add HOD."});
             const output = `<p>Dear ${req.body.role}</p>
-                            <h3>Login Credentials</h3>
+                            <h2>Login Credentials</h2>
                             <p>Please find your Login Credentials to CMS Account is</p>
                             <ul>  
                               <li>First Name: ${req.body.userid}</li>
-                              <li>Last Name: ${req.body.password}</li>
+                              <li>Last Name: ${userpassword}</li>
                             </ul>
-                            <h5>Note:</h5>
+                            <h3>Note:</h3>
                             <p>Please Don't Share these credentials with anyone</p>`;
             let transporter = nodemailer.createTransport({
               service: 'gmail',
@@ -247,14 +255,14 @@ router.post('/adduser',function(req,res,next){
             res.json({success:false , msg:"add TPO failed."});
           }else{
             res.json({success:true , msg:"success in add TPO."});
-            const output = `<p>Dear ${req.body.role}</p>
-                            <h3>Login Credentials</h3>
+            const output = `<p>Dear ${upperCase(req.body.role)}</p>
+                            <h2>Login Credentials</h2>
                             <p>Please find your Login Credentials to CMS Account is</p>
                             <ul>  
                               <li>User Name: ${req.body.userid}</li>
-                              <li>Password: ${req.body.password}</li>
+                              <li>Password: ${userpassword}</li>
                             </ul>
-                            <h5>Note:</h5>
+                            <h3>Note:</h3>
                             <p>Please Don't Share these credentials with anyone</p>`;
             let transporter = nodemailer.createTransport({
               service: 'gmail',

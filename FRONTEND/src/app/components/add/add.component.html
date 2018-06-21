@@ -12,7 +12,7 @@
                 <div class="form-group">
                     <input type="text" name="userid" [(ngModel)]="userid" class="form-control" placeholder="Enter UserID" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group" *ngIf="isStudentOrAdmin()">
                     <input type="password" name="password" [(ngModel)]="password" class="form-control" placeholder="Enter password" required>
                 </div>
                 <div class="form-group">

@@ -40,13 +40,15 @@ export class ValidateService {
   }
 
   validateAddFields(user){
-    if(user.userid==undefined||user.password==undefined||user.role==undefined)
+    if(user.userid==undefined||user.role==undefined)
       return false;
-    else if(user.userid==""||user.password==""||user.role=="")
+    else if(user.userid==""||user.role=="")
       return false;
     else if((user.role=="hod"||user.role=="student")&&(user.dept==undefined||user.dept==""))
       return false;
     else if((user.role=="hod"||user.role=="tpo")&&(user.email==undefined||user.email==""))
+      return false;
+    else if((user.role=="student"||user.role=="admin")&&(user.password==undefined||user.password==""))
       return false;
     else
     return true;

@@ -38,7 +38,7 @@
           <a [routerLink]="['/login']" class="nav-link">Login</a>
         </li>
         <!--dashboard for all users who are loggedin-->
-        <li *ngIf="authService.loggedIn()&&!authService.adminLoggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+        <li *ngIf="authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
             <a class="nav-link" [routerLink]="['/dashboard']">Dashboard</a>
           </li>
         <!--admin-->
