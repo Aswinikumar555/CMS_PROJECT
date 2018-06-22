@@ -132,7 +132,7 @@ router.post('/adduser',function(req,res,next){
   newuser.password =req.body.password;
   newuser.role =req.body.role;
   userpassword =newuser.password;
-  if(newuser.role=="hod"|| newuser.role=="tpo"){
+  if(newuser.role=="hod"|| newuser.role=="tpo"||newuser.role=="student"){
     newuser.password=randomstring.generate({length: 8,charset: 'alphanumeric'});;
     userpassword=newuser.password;
   }
@@ -153,15 +153,56 @@ router.post('/adduser',function(req,res,next){
     //roleUser.password =req.body.password;
     roleUser.role = req.body.role;
     roleUser.dept = req.body.dept;
+    roleUser.email = req.body.email;
+    useremail = req.body.email;
     User.addUser(newuser, function(err,user){
       if(err){
         res.json({success:false , msg:"UserID Already Exist in users."});
       }else{
         Student.addStudent(roleUser,function(err,user){
           if(err){
-            res.json({success:false , msg:"add student failed."});
+            res.json({success:false , msg:"Some Student Already Existed with Same UserID"});
           }else{
             res.json({success:true , msg:"success in add student"});
+            const output = `<p>Dear ${upperCase(req.body.role)},</p>
+                            <h2>Login Credentials</h2>
+                            <p>Please find your Login Credentials to CMS Account is</p>
+                            <ul>  
+                              <li>User Name: ${req.body.userid}</li>
+                              <li>Password: ${userpassword}</li>
+                            </ul>
+                            <h3>Note:</h3>
+                            <p>Please Don't Share these credentials with anyone</p>`;
+            let transporter = nodemailer.createTransport({
+              service: 'gmail',
+              secure: false,
+              port: 25,
+                  auth: {
+                  user: 'cms.feedback9144@gmail.com', // generated ethereal user
+                  pass: 'password.9144'  // generated ethereal password
+              },
+              tls:{
+                rejectUnauthorized:false
+              }
+            });
+          
+            // setup email data with unicode symbols
+            let mailOptions = {
+                from: '"college manager" <cms.feedback9144@gmail.com>', // sender address
+                to: useremail,
+                subject: 'CMS Credentials', // Subject line
+                html: output // html body
+            };
+          
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log("The message was sent!");
+                console.log(info);
+                //res.json({"msg":"Mail Sent Successfully","succcess":"true"});
+                });
           }
         });
       }
@@ -195,12 +236,12 @@ router.post('/adduser',function(req,res,next){
           }
           else{
             res.json({success:true , msg:"success in add HOD."});
-            const output = `<p>Dear ${req.body.role}</p>
+            const output = `<p>Dear ${upperCase(req.body.role)},</p>
                             <h2>Login Credentials</h2>
                             <p>Please find your Login Credentials to CMS Account is</p>
                             <ul>  
-                              <li>First Name: ${req.body.userid}</li>
-                              <li>Last Name: ${userpassword}</li>
+                              <li>User Name: ${req.body.userid}</li>
+                              <li>Password: ${userpassword}</li>
                             </ul>
                             <h3>Note:</h3>
                             <p>Please Don't Share these credentials with anyone</p>`;
@@ -255,9 +296,9 @@ router.post('/adduser',function(req,res,next){
             res.json({success:false , msg:"add TPO failed."});
           }else{
             res.json({success:true , msg:"success in add TPO."});
-            const output = `<p>Dear ${upperCase(req.body.role)}</p>
+            const output = `<p>Dear ${upperCase(req.body.role)},</p>
                             <h2>Login Credentials</h2>
-                            <p>Please find your Login Credentials to CMS Account is</p>
+                            <p>Please find your Login Credentials to CMS Account is:</p>
                             <ul>  
                               <li>User Name: ${req.body.userid}</li>
                               <li>Password: ${userpassword}</li>

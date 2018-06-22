@@ -46,9 +46,9 @@ export class ValidateService {
       return false;
     else if((user.role=="hod"||user.role=="student")&&(user.dept==undefined||user.dept==""))
       return false;
-    else if((user.role=="hod"||user.role=="tpo")&&(user.email==undefined||user.email==""))
+    else if((user.role=="hod"||user.role=="tpo"||user.role=="student")&&(user.email==undefined||user.email==""))
       return false;
-    else if((user.role=="student"||user.role=="admin")&&(user.password==undefined||user.password==""))
+    else if((user.role=="admin")&&(user.password==undefined||user.password==""))
       return false;
     else
     return true;

@@ -71,5 +71,3 @@ module.exports.getStudentByDeptYear = function(dept,year,callback){
   Student.find({dept:dept,year:year},callback);
   }
 }
-
-

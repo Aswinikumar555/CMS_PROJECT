@@ -12,7 +12,7 @@
                 <div class="form-group">
                     <input type="text" name="userid" [(ngModel)]="userid" class="form-control" placeholder="Enter UserID" required>
                 </div>
-                <div class="form-group" *ngIf="isStudentOrAdmin()">
+                <div class="form-group" *ngIf="isAdmin()">
                     <input type="password" name="password" [(ngModel)]="password" class="form-control" placeholder="Enter password" required>
                 </div>
                 <div class="form-group">
@@ -35,7 +35,7 @@
                         <option value="CIVIL">CIVIL</option>
                     </select>
                 </div>
-                <div class="form-group" *ngIf="isTpoOrHod()">
+                <div class="form-group" *ngIf="isStudentOrTpoOrHod()">
                     <input type="email" name="email" [(ngModel)]="email" class="form-control" placeholder="Enter Email" required>
                 </div>
                 <input class="btn btn-lg btn-primary btn-block" type="submit" value="ADD">

@@ -59,14 +59,14 @@ export class AddComponent implements OnInit {
     else
       return false;
   }
-  isTpoOrHod(){
-    if(this.role=='tpo'||this.role=='hod')
+  isStudentOrTpoOrHod(){
+    if(this.role=='tpo'||this.role=='hod'||this.role=='student')
       return true;
     else
       return false;
   }
-  isStudentOrAdmin(){
-    if(this.role=='student'||this.role=='admin')
+  isAdmin(){
+    if(this.role=='admin')
       return true;
     else
       return false;
