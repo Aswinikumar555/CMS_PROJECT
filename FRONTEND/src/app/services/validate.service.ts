@@ -74,4 +74,15 @@ export class ValidateService {
       return true;
     }
   }
+  validateRequest(obj){
+    if(obj.subject==""||obj.role==""||obj.email==""||obj.message==""){
+      return false;
+    }
+    else if(obj.subject==undefined||obj.role==undefined||obj.email==undefined||obj.message==undefined){
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
 }

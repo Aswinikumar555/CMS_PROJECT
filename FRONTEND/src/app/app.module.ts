@@ -32,6 +32,7 @@ import { PostService } from './services/post.service';
 import { ChatComponent } from './components/chat/chat.component';
 import { ResetComponent } from './components/reset/reset.component';
 import { ResetpwdComponent } from './components/resetpwd/resetpwd.component';
+import { ContactadminComponent } from './components/contactadmin/contactadmin.component';
 
 
 
@@ -46,6 +47,7 @@ var appRoutes:Routes=[
     { path:"events", component:EventsComponent },
     { path:"about", component:AboutComponent },
     { path:"contact", component:ContactusComponent },
+    { path:"contactadmin", component:ContactadminComponent },
     { path:"login", component:LoginComponent },
     { path:"dashboard", component:DashboardComponent, canActivate:[AuthGuard]},
     { path:"welcome", component:WelcomeComponent,canActivate:[AuthGuard]},
@@ -78,6 +80,7 @@ var appRoutes:Routes=[
     ChatComponent,
     ResetComponent,
     ResetpwdComponent,
+    ContactadminComponent
   ],
   imports: [
     BrowserModule,

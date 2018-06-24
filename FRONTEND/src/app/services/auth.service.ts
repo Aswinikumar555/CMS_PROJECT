@@ -68,6 +68,13 @@ export class AuthService {
     .map(res =>  res.json());
   }
 
+  user_request(data){
+    var headres = new Headers();
+    headres.append('content-type','application/json');
+    return this.http.post("http://localhost:3000/mail/send_user_req",data,{headers:headres})
+    .map(res =>  res.json());
+  }
+
   sendForgotMail(user){
     var headres = new Headers();
     headres.append('content-type','application/json');

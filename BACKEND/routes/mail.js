@@ -61,7 +61,7 @@ router.post('/feedback_send', (req, res) => {
     // setup email data with unicode symbols
     let mailOptions = {
         from: '"college manager" <cms.feedback9144@gmail.com>', // sender address
-        to: 'n130318@rguktn.ac.in,ch.mani9144@gmail.com', // list of receivers
+        to: 'n130318@rguktn.ac.in', // list of receivers
         subject: 'Node Contact Request', // Subject line
         text: 'Hello world?', // plain text body
         html: output // html body
@@ -76,7 +76,198 @@ router.post('/feedback_send', (req, res) => {
         console.log(info);
         res.json({msg:"Feedback Sent Successfully",success:"true"});
         });
-    });
+});
+
+router.post('/send_user_req', (req, res) => {
+    var useremail=req.body.email;
+    var userrole=req.body.role;
+    if(userrole=="student")
+    {
+        Student.find({email:useremail},function(err,user){
+            console.log(user);
+            if(err)
+            {
+                throw err;
+                console.log(err);
+            }
+            else if(user==[]||user==""||user==undefined)
+            {
+                res.json({sucess:false,msg:"Please Provide Valid Email Id and Role"})
+            }
+            else{
+                const output = `
+            <p> Dear Admin, You have a new Technical Issue</p>
+            <h3>Request Details</h3>
+            <ul>  
+                <li>E-mail: ${req.body.email}</li>
+                <li>Role: ${req.body.role}</li>
+                <li>Subject: ${req.body.subject}</li>
+            </ul>
+            <h3>User Request</h3>
+            <p>${req.body.message}</p>
+            `;
+            
+            let  transporter = nodemailer.createTransport({
+                service: 'gmail',
+                secure: false,
+                port: 25,
+                auth: {
+                user: 'cms.feedback9144@gmail.com',
+                pass: 'password.9144'
+                },
+                tls:{
+                    rejectUnauthorized:false
+                }
+            });
+        
+            // setup email data with unicode symbols
+            let mailOptions = {
+                from: '"college manager" <cms.feedback9144@gmail.com>', // sender address
+                to: 'n130318@rguktn.ac.in', // list of receivers
+                subject: req.body.subject , // Subject line
+                text: 'Hello world?', // plain text body
+                html: output // html body
+            };
+        
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log("The message was sent!");
+                console.log(info);
+                res.json({msg:"Request Sent Successfully",success:"true"});
+                });
+
+                    }
+                });
+
+    }
+    else if(userrole=="hod")
+    {
+        HOD.find({email:useremail},function(err,user){
+            console.log(user);
+            if(err)
+            {
+                throw err;
+                console.log(err);
+            }
+            else if(!user)
+            {
+                res.json({sucess:false,msg:"Please Provide Valid Email Id and Role"})
+            }
+            else{
+                const output = `
+            <p>Dear Admin, You have a new Technical Issue:</p>
+            <h3>Request Details</h3>
+            <ul>  
+                <li>E-mail: ${req.body.email}</li>
+                <li>Role: ${req.body.role}</li>
+                <li>Subject: ${req.body.subject}</li>
+            </ul>
+            <h3>User Request</h3>
+            <p>${req.body.message}</p>
+            `;
+            
+            let  transporter = nodemailer.createTransport({
+                service: 'gmail',
+                secure: false,
+                port: 25,
+                auth: {
+                user: 'cms.feedback9144@gmail.com',
+                pass: 'password.9144'
+                },
+                tls:{
+                    rejectUnauthorized:false
+                }
+            });
+        
+            // setup email data with unicode symbols
+            let mailOptions = {
+                from: '"college manager" <cms.feedback9144@gmail.com>', // sender address
+                to: 'n130318@rguktn.ac.in', // list of receivers
+                subject: req.body.subject, // Subject line
+                text: 'Hello world?', // plain text body
+                html: output // html body
+            };
+        
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log("The message was sent!");
+                console.log(info);
+                res.json({msg:"Request Sent Successfully",success:"true"});
+                });
+                    }
+                });
+    }
+    else if(userrole=="tpo")
+    {
+        TPO.find({email:useremail},function(err,user){
+            console.log(user);
+            if(err)
+            {
+                throw err;
+                console.log(err);
+            }
+            else if(!user)
+            {
+                res.json({sucess:false,msg:"Please Provide Valid Email Id and Role"})
+            }
+            else{
+                const output = `
+            <p>Dear Admin, You have a new Technical Issue:</p>
+            <h3>Request Details</h3>
+            <ul>  
+                <li>E-mail: ${req.body.email}</li>
+                <li>Role: ${req.body.role}</li>
+                <li>Subject: ${req.body.subject}</li>
+            </ul>
+            <h3>User Request</h3>
+            <p>${req.body.message}</p>
+            `;
+            
+            let  transporter = nodemailer.createTransport({
+                service: 'gmail',
+                secure: false,
+                port: 25,
+                auth: {
+                user: 'cms.feedback9144@gmail.com',
+                pass: 'password.9144'
+                },
+                tls:{
+                    rejectUnauthorized:false
+                }
+            });
+        
+            // setup email data with unicode symbols
+            let mailOptions = {
+                from: '"college manager" <cms.feedback9144@gmail.com>', // sender address
+                to: 'n130318@rguktn.ac.in', // list of receivers
+                subject: req.body.subject, // Subject line
+                text: 'Hello world?', // plain text body
+                html: output // html body
+            };
+        
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log("The message was sent!");
+                console.log(info);
+                res.json({msg:"Request Sent Successfully",success:"true"});
+                });
+
+                    }
+                });
+    }
+    else{
+        res.json({msg:"Please Choose Valid Role",success:"false"});
+    }
+});
 
 router.post('/forgot', function(req, res, next) {
     var usermail;

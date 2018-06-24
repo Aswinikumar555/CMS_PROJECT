@@ -28,8 +28,11 @@
         <li *ngIf="!authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
           <a class="nav-link" [routerLink]="['/about']">About</a>
         </li>  
-        <li *ngIf="!authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+        <li *ngIf="!authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" title="Click here to Send Feedback or Give Any Educational Issue">
           <a class="nav-link" [routerLink]="['/contact']">Contact-Us</a>
+        </li>
+        <li *ngIf="!authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" title="Click here for any Technical Issues">
+          <a class="nav-link" [routerLink]="['/contactadmin']">Contact-Admin</a>
         </li>
         <li *ngIf="!authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
             <a class="nav-link" [routerLink]="['/chat']">Chat_with_me</a>
