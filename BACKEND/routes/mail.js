@@ -126,7 +126,8 @@ router.post('/send_user_req', (req, res) => {
                 to: 'n130318@rguktn.ac.in', // list of receivers
                 subject: req.body.subject , // Subject line
                 text: 'Hello world?', // plain text body
-                html: output // html body
+                html: output, // html body
+                replyTo:useremail
             };
         
             // send mail with defined transport object
@@ -137,6 +138,9 @@ router.post('/send_user_req', (req, res) => {
                 console.log("The message was sent!");
                 console.log(info);
                 res.json({msg:"Request Sent Successfully",success:"true"});
+                //if(req.body.message.indexOf("forgot userid")>0||req.body.message.indexOf("lost userid")>0||req.body.message.indexOf("userid")>0)
+                //Send same mail with to as reply-to in mail with auto reply in case of forgot user name
+                //is-autoreply
                 });
 
                     }
@@ -188,7 +192,8 @@ router.post('/send_user_req', (req, res) => {
                 to: 'n130318@rguktn.ac.in', // list of receivers
                 subject: req.body.subject, // Subject line
                 text: 'Hello world?', // plain text body
-                html: output // html body
+                html: output, // html body
+                replyTo:useremail
             };
         
             // send mail with defined transport object
@@ -248,7 +253,8 @@ router.post('/send_user_req', (req, res) => {
                 to: 'n130318@rguktn.ac.in', // list of receivers
                 subject: req.body.subject, // Subject line
                 text: 'Hello world?', // plain text body
-                html: output // html body
+                html: output, // html body
+                replyTo:useremail
             };
         
             // send mail with defined transport object

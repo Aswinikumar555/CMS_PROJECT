@@ -23,12 +23,15 @@ router.get('/tposearch',function(req,res,next){
     let quary;
     var depts=JSON.parse(req.query.depts);
     var years=JSON.parse(req.query.years);
+    var minaggrigt=JSON.parse(req.query.minaggrigt);
     if(depts.length!=0&&years.length!=0)
-      quary={dept:{$in:depts},year:{$in:years}}
+      quary={dept:{$in:depts},year:{$in:years},aggregate:{$gte:minaggrigt}}
     else if(depts.length==0)
-      quary={year:{$in:years}}
+      quary={year:{$in:years},aggregate:{$gte:minaggrigt}}
     else if(years.length==0)
-      quary={dept:{$in:depts}}
+      quary={dept:{$in:depts},aggregate:{$gte:minaggrigt}}
+    else if(minaggrigt==0||minaggrigt==undefined||minaggrigt=="")
+      quary={dept:{$in:depts},year:{$in:years}}
     else
       return res.json([]);
     Student.find(quary,function(err,result){

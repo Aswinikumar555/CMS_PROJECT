@@ -11,8 +11,8 @@ export class SearchService {
     private http:Http,
     private authService:AuthService
   ) { }
-  tpoSearch(depts,years){
-    return this.http.get("http://localhost:3000/student/tposearch?depts="+depts+"&years="+years)
+  tpoSearch(depts,years,minaggrigt){
+    return this.http.get("http://localhost:3000/student/tposearch?depts="+depts+"&years="+years+"&minaggrigt="+minaggrigt)
     .map(res => res.json());
   }
 

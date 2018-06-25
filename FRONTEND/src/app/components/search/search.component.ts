@@ -12,6 +12,7 @@ import { SearchService } from '../../services/search.service';
 export class SearchComponent implements OnInit {
   dept:string;
   year:string;
+  minaggrigt:Number;
   students: Student[];
   student: Student;
   tpodepts:any[];
@@ -74,19 +75,19 @@ export class SearchComponent implements OnInit {
   selectdepts(ev){
     if(ev.currentTarget.checked){
       this.tpodepts.push(ev.target.defaultValue);
-      console.log(this.tpodepts);}
+      console.log("TPO Depts: "+this.tpodepts);}
     else{
       var out=this.tpodepts.splice(this.tpodepts.indexOf(ev.target.defaultValue));
-      console.log(this.tpodepts);
+      console.log("TPO Depts: "+this.tpodepts);
     }
  }
  selectyears(ev){
   if(ev.currentTarget.checked){
     this.tpoyears.push(ev.target.defaultValue);
-    console.log(this.tpoyears);}
+    console.log("TPO Years: "+this.tpoyears);}
   else{
     var out=this.tpoyears.splice(this.tpoyears.indexOf(ev.target.defaultValue));
-    console.log(this.tpoyears);
+    console.log("TPO Years: "+this.tpoyears);
   }
 }
 
@@ -96,7 +97,8 @@ onSearchClick(){
     this.tpotable=false;
     return;
   }
-  this.searchService.tpoSearch(JSON.stringify(this.tpodepts),JSON.stringify(this.tpoyears))
+  let minaggrigt=this.minaggrigt;
+  this.searchService.tpoSearch(JSON.stringify(this.tpodepts),JSON.stringify(this.tpoyears),JSON.stringify(this.minaggrigt))
   .subscribe(data => {
     if(data.length==0){
       this.flashmessage.show("No recoreds found",{cssClass:'alert-danger text-center',timeOut:2000});
