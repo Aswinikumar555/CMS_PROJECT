@@ -77,7 +77,7 @@ export class SearchComponent implements OnInit {
       this.tpodepts.push(ev.target.defaultValue);
       console.log("TPO Depts: "+this.tpodepts);}
     else{
-      var out=this.tpodepts.splice(this.tpodepts.indexOf(ev.target.defaultValue));
+      var out=this.tpodepts.splice(this.tpodepts.indexOf(ev.target.defaultValue),1);
       console.log("TPO Depts: "+this.tpodepts);
     }
  }
@@ -86,30 +86,37 @@ export class SearchComponent implements OnInit {
     this.tpoyears.push(ev.target.defaultValue);
     console.log("TPO Years: "+this.tpoyears);}
   else{
-    var out=this.tpoyears.splice(this.tpoyears.indexOf(ev.target.defaultValue));
+    var out=this.tpoyears.splice(this.tpoyears.indexOf(ev.target.defaultValue),1);
     console.log("TPO Years: "+this.tpoyears);
   }
 }
 
 onSearchClick(){
-  if(this.tpodepts.length==0&&this.tpoyears.length==0){
-    this.tpoResult=[];
-    this.tpotable=false;
-    return;
-  }
   let minaggrigt=this.minaggrigt;
-  this.searchService.tpoSearch(JSON.stringify(this.tpodepts),JSON.stringify(this.tpoyears),JSON.stringify(this.minaggrigt))
-  .subscribe(data => {
-    if(data.length==0){
-      this.flashmessage.show("No recoreds found",{cssClass:'alert-danger text-center',timeOut:2000});
+  if(JSON.stringify(this.minaggrigt)==""||JSON.stringify(this.minaggrigt)==undefined)
+  {
+    this.flashmessage.show("Please Enter Minimum Aggrigate",{cssClass:'alert-danger text-center',timeOut:2000});
+  }
+  else
+  {
+    if(this.tpodepts.length==0&&this.tpoyears.length==0){
+      this.tpoResult=[];
       this.tpotable=false;
-      this.tpoResult=[];}
-    else{
-        this.tpoResult=data;
-        this.tpotable=true;
-        console.log(this.tpoResult);
+      return;
     }
-  })
+    this.searchService.tpoSearch(JSON.stringify(this.tpodepts),JSON.stringify(this.tpoyears),JSON.stringify(this.minaggrigt))
+    .subscribe(data => {
+      if(data.length==0){
+        this.flashmessage.show("No recoreds found",{cssClass:'alert-danger text-center',timeOut:2000});
+        this.tpotable=false;
+        this.tpoResult=[];}
+      else{
+          this.tpoResult=data;
+          this.tpotable=true;
+          console.log(this.tpoResult);
+      }
+    })
+}
 }
 
 deletestudent(student){
