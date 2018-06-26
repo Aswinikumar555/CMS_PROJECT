@@ -122,18 +122,18 @@
             <input placeholder="Phonenumber" required type="text" [(ngModel)]="phone" class="form-control"  name='phone'>
         </div>
         <div class="form-group example-full-width">
-            <textarea placeholder="Address" name="address" [(ngModel)]="address" class="form-control"  required ></textarea>
+            <textarea placeholder="Address" name="address" [(ngModel)]="address" class="form-control" required ></textarea>
         </div>
         <div class="form-group example-full-width" *ngIf="authService.studentLoggedIn()">
-            <input  placeholder="aggregate" name="aggregate" [(ngModel)]="aggregate" class="form-control"  required >
+            <input placeholder="aggregate" type="number" name="aggregate" [(ngModel)]="aggregate" class="form-control"  required >
         </div>
         <div class="form-group" *ngIf="authService.studentLoggedIn()">
-            <select placeholder="Year" class="example-full-width form-control"   name="year" [(ngModel)]="year" required>
+            <select placeholder="Year" class="example-full-width form-control" name="year" [(ngModel)]="year" required>
                 <option>--</option>
                 <option value="1year">1<sup>st</sup>year</option>
                 <option value="2year">2<sup>nd</sup>year</option>
                 <option value="3year">3<sup>rd</sup>year</option>
-                <option value="4year">4<sup>rd</sup>year</option>
+                <option value="4year">4<sup>th</sup>year</option>
             </select>
         </div>
         <!-- <div class="example-full-width">

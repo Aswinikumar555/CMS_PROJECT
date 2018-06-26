@@ -274,7 +274,7 @@
 
 <div *ngIf="tpotable">
 <!--Table-->
-<input type="button" class="text-center btn btn-md btn-success" style="float:right;margin-bottom:4px;" onclick="tableToExcel('testTable', 'W3C Example Table')" value="Export">
+<button class="text-center btn btn-md btn-success" style="float:right;margin-bottom:4px;" (click)="tableToExcel('testTable', 'Student_List', 'myfile.xls')" value="Export">Export</button>
 <table id="testTable" class="table text-white">
 
         <!--Table head-->
