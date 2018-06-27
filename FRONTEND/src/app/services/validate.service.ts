@@ -75,10 +75,10 @@ export class ValidateService {
     }
   }
   validateRequest(obj){
-    if(obj.subject==""||obj.role==""||obj.email==""||obj.message==""){
+    if(obj.subject==""||obj.role==""||obj.emailoruid==""||obj.message==""){
       return false;
     }
-    else if(obj.subject==undefined||obj.role==undefined||obj.email==undefined||obj.message==undefined){
+    else if(obj.subject==undefined||obj.role==undefined||obj.emailoruid==undefined||obj.message==undefined){
       return false;
     }
     else {

@@ -9,7 +9,7 @@ import { ValidateService } from '../../services/validate.service';
   styleUrls: ['./contactadmin.component.css']
 })
 export class ContactadminComponent implements OnInit {
-  email:String;
+  emailoruid:String;
   subject:String;
   message:String;
   role:String;
@@ -29,7 +29,7 @@ export class ContactadminComponent implements OnInit {
     var obj={
     subject:this.subject,
     message:this.message,
-    email:this.email,
+    emailoruid:this.emailoruid,
     role:this.role
     };
     console.log(obj);
@@ -50,7 +50,7 @@ export class ContactadminComponent implements OnInit {
       });
       this.message="";
       this.subject="";
-      this.email="";
+      this.emailoruid="";
       this.role="";
     }
   }

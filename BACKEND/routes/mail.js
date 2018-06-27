@@ -79,11 +79,14 @@ router.post('/feedback_send', (req, res) => {
 });
 
 router.post('/send_user_req', (req, res) => {
-    var useremail=req.body.email;
+    let useremail;
+    var useremailoruid=req.body.emailoruid;
     var userrole=req.body.role;
     if(userrole=="student")
     {
-        Student.find({email:useremail},function(err,user){
+        Student.findOne({ $or: [ { email: useremailoruid }, {userid:useremailoruid } ] },function(err,user){
+            useremail=user.email;
+            console.log(useremail);
             console.log(user);
             if(err)
             {
@@ -99,8 +102,9 @@ router.post('/send_user_req', (req, res) => {
             <p> Dear Admin, You have a new Technical Issue</p>
             <h3>Request Details</h3>
             <ul>  
-                <li>E-mail: ${req.body.email}</li>
+                <li>E-mail: ${useremail}</li>
                 <li>Role: ${req.body.role}</li>
+                <li>User Id: ${user.userid}</li>
                 <li>Subject: ${req.body.subject}</li>
             </ul>
             <h3>User Request</h3>
@@ -149,8 +153,8 @@ router.post('/send_user_req', (req, res) => {
     }
     else if(userrole=="hod")
     {
-        HOD.find({email:useremail},function(err,user){
-            console.log(user);
+        HOD.findOne({ $or: [ { email: useremailoruid }, {userid:useremailoruid } ] },function(err,user){
+            useremail=user.email;
             if(err)
             {
                 throw err;
@@ -165,8 +169,9 @@ router.post('/send_user_req', (req, res) => {
             <p>Dear Admin, You have a new Technical Issue:</p>
             <h3>Request Details</h3>
             <ul>  
-                <li>E-mail: ${req.body.email}</li>
+                <li>E-mail: ${useremail}</li>
                 <li>Role: ${req.body.role}</li>
+                <li>User Id: ${user.userid}</li>
                 <li>Subject: ${req.body.subject}</li>
             </ul>
             <h3>User Request</h3>
@@ -210,8 +215,8 @@ router.post('/send_user_req', (req, res) => {
     }
     else if(userrole=="tpo")
     {
-        TPO.find({email:useremail},function(err,user){
-            console.log(user);
+        TPO.find({ $or: [ { email: useremailoruid }, {userid:useremailoruid } ] },function(err,user){
+            useremail=user.email;
             if(err)
             {
                 throw err;
@@ -226,7 +231,8 @@ router.post('/send_user_req', (req, res) => {
             <p>Dear Admin, You have a new Technical Issue:</p>
             <h3>Request Details</h3>
             <ul>  
-                <li>E-mail: ${req.body.email}</li>
+                <li>E-mail: ${useremail}</li>
+                <li>User Id: ${user.userid}</li>
                 <li>Role: ${req.body.role}</li>
                 <li>Subject: ${req.body.subject}</li>
             </ul>
@@ -285,7 +291,7 @@ router.post('/forgot', function(req, res, next) {
             });
         },
         function(token, done) {
-        User.findOne({ userid: req.body.userid }, function(err, user) {
+        User.findOne({userid: req.body.userid }, function(err, user) {
             if (!user) {
             return res.json({success:false, msg:'No account with that userID exists.'});
             }
