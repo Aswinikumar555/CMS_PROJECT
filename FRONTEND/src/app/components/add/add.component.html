@@ -1,5 +1,5 @@
 <div class="container">
-    <form (submit)="onAddSubmit()">
+    <form (submit)="onAddSubmit()" *ngIf="!toggleform">
         <div class="text-center mb-4">
             <h1 class="h3 mb-3 font-weight-normal">
                 <font class="text-white">ADD USER</font>
@@ -39,6 +39,53 @@
                     <input type="email" name="email" [(ngModel)]="email" class="form-control" placeholder="Enter Email" required>
                 </div>
                 <input class="btn btn-lg btn-primary btn-block" type="submit" value="ADD">
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </form>
+
+    <!---Update User -->
+    <form #editform="ngForm" (ngSubmit)="onUpdateSubmit(editform)" *ngIf="toggleform">
+        <div class="text-center mb-4">
+            <h1 class="h3 mb-3 font-weight-normal">
+                <font class="text-white">UPDATE USER</font>
+            </h1>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="text" name="userid" [(ngModel)]="selectedUser.userid" class="form-control" readonly="readonly" placeholder="Enter UserID" required>
+                </div>
+                <div class="form-group" *ngIf="isAdmin()">
+                    <input type="password" name="password" [(ngModel)]="password" class="form-control" placeholder="Enter password" required>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" name="role" [(ngModel)]="selectedUser.role">
+                        <option disabled="disabled" selected>select role</option>
+                        <option value="student">STUDENT</option>
+                        <option value="hod">HOD</option>
+                        <option value="tpo">TPO</option>
+                        <option value="admin">ADMIN</option>
+                    </select>
+                </div>
+                <div class="form-group" *ngIf="isStuOrHod()">
+                    <select class="form-control" name="dept" [(ngModel)]="selectedUser.dept">
+                        <option disabled="disabled" selected>select dept</option>
+                        <option value="CSE">CSE</option>
+                        <option value="ECE">ECE</option>
+                        <option Value="EEE">EEE</option>
+                        <option value="IT">IT</option>
+                        <option value="MECH">MECH</option>
+                        <option value="CIVIL">CIVIL</option>
+                    </select>
+                </div>
+                <div class="form-group" *ngIf="isStuOrTpoOrHod()">
+                    <input type="email" name="email" [(ngModel)]="selectedUser.email" class="form-control" placeholder="Enter Email" required>
+                </div>
+                <input class="btn btn-lg btn-primary btn-block" type="submit" value="UPDATE">
             </div>
             <div class="col-md-4">
             </div>

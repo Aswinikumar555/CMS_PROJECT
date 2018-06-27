@@ -38,6 +38,12 @@ export class ValidateService {
       return true;
     }
   }
+  validateUpdateFields(user){
+    if((user.role=="hod"||user.role=="student"||user.role=="tpo")&&(user.dept==undefined||user.dept==""||user.email==undefined||user.email==""))
+      return false;
+    else
+      return true;
+  }
 
   validateAddFields(user){
     if(user.userid==undefined||user.role==undefined)

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Student } from '../models/Student';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,8 @@ export class AuthService {
   authToken: any;
   user: any;
   role: any;
+  selectedUser:Student;
+  toggleForm:boolean=false;
   constructor(private http:Http,public jwtHelper: JwtHelperService) { }
 
   //users apis
@@ -18,6 +21,10 @@ export class AuthService {
     headres.append('content-type','application/json');
     return this.http.post("http://localhost:3000/users/adduser",user,{headers:headres})
       .map(res =>  res.json());
+  }
+  updateUser(userid,updateData){
+    return this.http.put("http://localhost:3000/student/updateusers/"+userid,updateData)
+    .map(res =>  res.json());
   }
 
   authUser(user){

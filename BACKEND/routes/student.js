@@ -117,6 +117,127 @@ router.delete('/delete/:userid', function(req, res, next) {
   })
 });
 
-
-
+//Update Admin
+router.put('/updateusers/:userid', function(req, res, next) {
+  User.getUserByUserId(req.params.userid,function(err,user){
+    //console.log(user);
+    if(err)
+    {
+      res.json({"error":err});
+    }
+    else if(!user){
+     res.json({success:false,msg:"User Not Found"});
+    }
+    else 
+    {
+      var user={
+        userid:req.body.userid,
+        role:req.body.role,
+        dept:req.body.dept
+      };
+      var newuser={
+        userid:req.body.userid,
+        role:req.body.role,
+        dept:req.body.dept,
+        email:req.body.email
+      };
+      //console.log(req.file.path);
+      //console.log(user);
+      if(user.role=="student")
+      {
+        User.update({userid:req.params.userid},user,function(err,result){
+          if(err){
+            console.log(err);
+            res.json(err);}
+          else if(result.n==1){
+            //res.json({success:true,msg:"Profile Updated Succesfully"});
+            console.log(result); 
+            Student.update({userid:req.params.userid},newuser,function(err,reslt){
+              if(err){
+                console.log(err);
+                res.json(err);}
+              else if(reslt.n==1){
+                res.json({success:true,msg:"Student Updated Succesfully"});
+                console.log(reslt); 
+              }
+              else{
+                console.log(reslt);
+                res.json({success:false,msg:JSON.stringify(reslt)});
+              }
+            });
+          }
+          else{
+            console.log(result);
+            res.json({success:false,msg:JSON.stringify(result)});
+          }
+        });
+      }
+      //Update HOD
+      else if(user.role=="hod")
+      {
+        User.update({userid:req.params.userid},user,function(err,result){
+          if(err){
+            console.log(err);
+            res.json(err);}
+          else if(result.n==1){
+            //res.json({success:true,msg:"Profile Updated Succesfully"});
+            console.log(result); 
+            HOD.update({userid:req.params.userid},newuser,function(err,reslt){
+              if(err){
+                console.log(err);
+                res.json(err);}
+              else if(reslt.n==1){
+                res.json({success:true,msg:"HOD Updated Succesfully"});
+                console.log(reslt); 
+              }
+              else{
+                console.log(reslt);
+                res.json({success:false,msg:JSON.stringify(reslt)});
+              }
+            });
+          }
+          else{
+            console.log(result);
+            res.json({success:false,msg:JSON.stringify(result)});
+          }
+        });
+      }
+      //Update TPO
+      else if(user.role=="tpo")
+      {
+        User.update({userid:req.params.userid},user,function(err,result){
+          if(err){
+            console.log(err);
+            res.json(err);}
+          else if(result.n==1){
+            //res.json({success:true,msg:"Profile Updated Succesfully"});
+            console.log(result); 
+            TPO.update({userid:req.params.userid},newuser,function(err,reslt){
+              if(err){
+                console.log(err);
+                res.json(err);}
+              else if(reslt.n==1){
+                res.json({success:true,msg:"TPO Updated Succesfully"});
+                console.log(reslt); 
+              }
+              else{
+                console.log(reslt);
+                res.json({success:false,msg:JSON.stringify(reslt)});
+              }
+            });
+          }
+          else{
+            console.log(result);
+            res.json({success:false,msg:JSON.stringify(result)});
+          }
+        });
+      }
+      else{
+        console.log("Invalid Update");
+        res.json({success:false,msg:"Invalid Update"});
+      }
+    }
+    
+  })
+});
 module.exports = router;
