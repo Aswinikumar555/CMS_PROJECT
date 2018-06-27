@@ -9,7 +9,8 @@ var UserSchema = mongoose.Schema({
     require: true
   },
   password:{
-    type: String
+    type: String,
+    require:true
   },
   role: {
     type: String,
