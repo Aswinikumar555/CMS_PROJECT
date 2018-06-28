@@ -26,8 +26,8 @@
             <td>{{rec.dob}}</td>
             <td>{{rec.year}}</td>
             <td>{{rec.dept}}</td>
-            <td *ngIf="authService.adminLoggedIn()"><input type="button" (click)="hodstudent(rec)" value="Delete" class="btn btn-danger"></td>
-            <td *ngIf="authService.adminLoggedIn()"><a class="nav-link" [routerLink]="['/add']"><input type="button" (click)="updatehod(rec)" value="Update E-mail" class="btn btn-primary"></a></td>
+            <td *ngIf="authService.adminLoggedIn()"><input type="button" (click)="deletehod(rec)" value="Delete" class="btn btn-danger"></td>
+            <td *ngIf="authService.adminLoggedIn()"><a class="nav-link" [routerLink]="['/add']"><input type="button" (click)="updatehod(rec)" value="Update" class="btn btn-primary"></a></td>
         </tr>
     </tbody>
     <!--Table body-->
@@ -65,7 +65,7 @@
             <td>{{rec.year}}</td>
             <td>{{rec.dept}}</td>
             <td *ngIf="authService.adminLoggedIn()"><input type="button" (click)="deletetpo(rec)" value="Delete" class="btn btn-danger"></td>
-            <td *ngIf="authService.adminLoggedIn()"><a class="nav-link" [routerLink]="['/add']"><input type="button" (click)="updatetpo(rec)" value="Update E-mail" class="btn btn-primary"></a></td>
+            <td *ngIf="authService.adminLoggedIn()"><a class="nav-link" [routerLink]="['/add']"><input type="button" (click)="updatetpo(rec)" value="Update" class="btn btn-primary"></a></td>
         </tr>
     </tbody>
     <!--Table body-->

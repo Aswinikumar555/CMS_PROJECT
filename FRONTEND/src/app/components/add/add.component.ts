@@ -77,6 +77,7 @@ export class AddComponent implements OnInit {
         console.log(data);
         if(data.success){
           this.flashmessage.show(data.msg,{cssClass:'alert-success text-center',timeOut:2000});
+          this.authService.toggleForm=!this.authService.toggleForm;
           this.router.navigate(['/search']);
           this.userid="";
           this.role="";
@@ -88,7 +89,6 @@ export class AddComponent implements OnInit {
         }
       });
     }
-    this.authService.toggleForm=!this.authService.toggleForm;
   }
   isStudentOrHod(){
     if(this.role=='student'||this.role=='hod')

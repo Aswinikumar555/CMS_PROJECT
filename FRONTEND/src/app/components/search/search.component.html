@@ -70,7 +70,7 @@
               <td>{{rec.year}}</td>
               <td>{{rec.dept}}</td>
               <td *ngIf="authService.adminLoggedIn()"><input type="button" (click)="deletestudent(rec)" value="Delete" class="btn btn-danger"></td>
-              <td *ngIf="authService.adminLoggedIn()"><a class="nav-link" [routerLink]="['/add']"><input type="button" (click)="updatestudent(rec)" value="Update E-mail" class="btn btn-primary"></a></td>
+              <td *ngIf="authService.adminLoggedIn()"><a class="nav-link" [routerLink]="['/add']"><input type="button" (click)="updatestudent(rec)" value="Update" class="btn btn-primary"></a></td>
           </tr>
       </tbody>
       <!--Table body-->

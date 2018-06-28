@@ -39,7 +39,9 @@ export class ValidateService {
     }
   }
   validateUpdateFields(user){
-    if((user.role=="hod"||user.role=="student"||user.role=="tpo")&&(user.dept==undefined||user.dept==""||user.email==undefined||user.email==""))
+    if((user.role=="hod"||user.role=="student")&&(user.dept==undefined||user.dept==""))
+      return false;
+    else if((user.role=="hod"||user.role=="student"||user.role=="tpo")&&(user.email==undefined||user.email==""))
       return false;
     else
       return true;

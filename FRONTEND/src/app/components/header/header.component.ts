@@ -32,14 +32,15 @@ export class HeaderComponent implements OnInit {
       console.log("HOD Set");
       this.authService.manageuser='hod';
       console.log(this.authService.manageuser);
+      this.pselect=undefined;
       this.router.navigate(['/manageusers']);
     }
     else if(this.pselect=="tpo"){
       console.log("TPO Set");
       this.authService.manageuser='tpo';
       console.log(this.authService.manageuser);
+      this.pselect=undefined;
       this.router.navigate(['/manageusers']);
     }
   }
-
 }
