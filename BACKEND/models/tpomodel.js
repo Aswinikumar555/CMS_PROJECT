@@ -46,3 +46,8 @@ module.exports.getTpoByUserId = function(userid,callback){
 module.exports.addTpo = function(newtpo,callback){
       newtpo.save(callback);
 }
+
+module.exports.getAllTpos = function(callback) {
+    //const query = {userid: userid};
+    TPO.find({},callback);
+  }

@@ -3,6 +3,7 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Student } from '../models/Student';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class AuthService {
   role: any;
   selectedUser:Student;
   toggleForm:boolean=false;
-  constructor(private http:Http,public jwtHelper: JwtHelperService) { }
+  manageuser:String="";
+  constructor(private http:Http,public jwtHelper: JwtHelperService,private router:Router) { }
 
   //users apis
   addUser(user){
@@ -63,6 +65,16 @@ export class AuthService {
     var headres = new Headers();
     headres.append('content-type','application/json');
     return this.http.get("http://localhost:3000/student/getstudentbydeptyear/"+basedon.dept+"/"+basedon.year)
+    .map(res =>  res.json());
+  }
+
+  gethods()
+  {
+    return this.http.get("http://localhost:3000/users/getallhods")
+    .map(res =>  res.json());
+  }
+  gettpos(){
+    return this.http.get("http://localhost:3000/users/getalltpos")
     .map(res =>  res.json());
   }
 
@@ -116,6 +128,18 @@ export class AuthService {
   {
     const token = localStorage.getItem('id_token');
     this.authToken = token;
+  }
+  loadhod(){
+    if(this.manageuser=='hod')
+        return true;
+    else
+      return false;
+  }
+  loadtpo(){
+    if(this.manageuser=='tpo')
+        return true;
+    else
+      return false;
   }
 
   storeUserData(token,user){

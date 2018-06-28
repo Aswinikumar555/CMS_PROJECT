@@ -1,0 +1,75 @@
+<div *ngIf="authService.loadhod()">
+    <h1 class="h3 mb-3 text-center font-weight-normal text-white">
+        <font>Manage HODS</font>
+      </h1>
+  <table class="table text-white">
+  <thead>
+        <tr>
+            <th>#</th>
+            <th>userID</th>
+            <th>Name</th>
+            <th>DOB</th>
+            <th>Year</th>
+            <th>Department</th>
+            <th *ngIf="authService.adminLoggedIn()">Opearation</th>
+            <th *ngIf="authService.adminLoggedIn()">Opearation</th>
+        </tr>
+    </thead>
+  <!--Table head-->
+
+    <!--Table body-->
+    <tbody>
+        <tr *ngFor="let rec of hods">
+            <td scope="row">{{hods.indexOf(rec)+1}}</td>
+            <td>{{rec.userid}}</td>
+            <td>{{rec.name}}</td>
+            <td>{{rec.dob}}</td>
+            <td>{{rec.year}}</td>
+            <td>{{rec.dept}}</td>
+            <td *ngIf="authService.adminLoggedIn()"><input type="button" (click)="hodstudent(rec)" value="Delete" class="btn btn-danger"></td>
+            <td *ngIf="authService.adminLoggedIn()"><a class="nav-link" [routerLink]="['/add']"><input type="button" (click)="updatehod(rec)" value="Update E-mail" class="btn btn-primary"></a></td>
+        </tr>
+    </tbody>
+    <!--Table body-->
+
+</table>
+<!--Table-->
+</div>
+
+<div *ngIf="authService.loadtpo()">
+    <h1 class="h3 mb-3 text-center font-weight-normal text-white">
+        <font>Manage TPOS</font>
+      </h1>
+  <table class="table text-white">
+  <thead>
+        <tr>
+            <th>#</th>
+            <th>userID</th>
+            <th>Name</th>
+            <th>DOB</th>
+            <th>Year</th>
+            <th>Department</th>
+            <th *ngIf="authService.adminLoggedIn()">Opearation</th>
+            <th *ngIf="authService.adminLoggedIn()">Opearation</th>
+        </tr>
+    </thead>
+  <!--Table head-->
+
+    <!--Table body-->
+    <tbody>
+        <tr *ngFor="let rec of tpos">
+            <td scope="row">{{tpos.indexOf(rec)+1}}</td>
+            <td>{{rec.userid}}</td>
+            <td>{{rec.name}}</td>
+            <td>{{rec.dob}}</td>
+            <td>{{rec.year}}</td>
+            <td>{{rec.dept}}</td>
+            <td *ngIf="authService.adminLoggedIn()"><input type="button" (click)="deletetpo(rec)" value="Delete" class="btn btn-danger"></td>
+            <td *ngIf="authService.adminLoggedIn()"><a class="nav-link" [routerLink]="['/add']"><input type="button" (click)="updatetpo(rec)" value="Update E-mail" class="btn btn-primary"></a></td>
+        </tr>
+    </tbody>
+    <!--Table body-->
+
+</table>
+<!--Table-->
+</div>

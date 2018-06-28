@@ -50,7 +50,17 @@
         </li>
         <li *ngIf="!authService.studentLoggedIn() && authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
             <a class="nav-link" [routerLink]="['/search']">Search</a>
-          </li>
+        </li>
+        <li *ngIf="authService.loggedIn()" class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+          <div class="dropdown float-right" >
+            <select class="btn btn-primary btn-md dropdown-toggle p-23" type="button" data-toggle="dropdown" name="pselect" [(ngModel)]="pselect" (change)="getuser()">
+            <option value="undefined" selected disabled>Manage Users</option>
+            <option value="hod">HOD</option>
+            <option value="tpo" >TPO</option>
+          </select>
+          </div>
+    
+        </li>
         <!--hod-->
         
 

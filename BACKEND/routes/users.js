@@ -447,6 +447,7 @@ router.get('/getallhods', function(req, res, next) {
   //res.send('respond with a resource:users');
   HOD.getAllHods(function(err,userdata){
     res.json(userdata);
+    console.log(userdata);
   });
 });
 
@@ -455,6 +456,7 @@ router.get('/getalltpos', function(req, res, next) {
   //res.send('respond with a resource:users');
   TPO.getAllTpos(function(err,userdata){
     res.json(userdata);
+    console.log(userdata);
   });
 });
 

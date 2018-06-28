@@ -51,3 +51,8 @@ module.exports.getHodByUserId = function(userid,callback){
 module.exports.addHod = function(newhod,callback){
       newhod.save(callback);
 }
+
+module.exports.getAllHods = function(callback) {
+  //const query = {userid: userid};
+  HOD.find({},callback);
+}
