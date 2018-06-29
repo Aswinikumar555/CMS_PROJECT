@@ -570,6 +570,7 @@ router.put('/updateuser/:userid',multer({dest:"./public/uploads/"}).single('imag
 
 
 router.post('/changepassword', function(req, res, next) {
+  var userrole;
   var userid = req.body.userid;
   var oldpassword = req.body.oldpassword;
   var newpassword = req.body.newpassword;
@@ -583,18 +584,173 @@ router.post('/changepassword', function(req, res, next) {
     });
     User.getUserByUserId(userid,function(err,user){
       if(err) throw err;
-      if(!user){
+      if(!user)
+      {
         return res.json({success:false,msg:"user not found."});
       }
+      userrole=user.role;
       User.compareUserPassword(oldpassword,user.password,function(err,ismatch){
         if(err) throw err;
-        if(ismatch){
+        if(ismatch)
+        {
           User.findOneAndUpdate({userid:userid},{$set:{password:newpassword}},function(err,result){
             if(err){
               res.json(err);
             }
             else{
-              res.json({success:true,msg:"Password Updated Succesfully."});
+              if(userrole=="student")
+              {
+                Student.getStudentByUserId(userid,function(err,usersdata){
+                  if(err) throw err;
+                  if(!usersdata)
+                  {
+                    return res.json({success:false,msg:"Student not found."});
+                  }
+                const output = `
+                <p>Dear ${upperCase(usersdata.role)},</p>
+                <p>Your password for CMS Account has been succesfully changed.</p><br><br>
+                <h3>Note</h3>
+                <p>If you Not did this please click on <a href="http://localhost:4200/forgot">forgot password</a> to change your Immidiately,Kindly Cooperate with us.</p>
+                `;
+            
+            let  transporter = nodemailer.createTransport({
+                service: 'gmail',
+                secure: false,
+                port: 25,
+                auth: {
+                user: 'cms.feedback9144@gmail.com',
+                pass: 'password.9144'
+                },
+                tls:{
+                    rejectUnauthorized:false
+                }
+            });
+        
+            // setup email data with unicode symbols
+            let mailOptions = {
+                from: '"college manager" <cms.feedback9144@gmail.com>', // sender address
+                to: usersdata.email,
+                subject: 'Regarding CMS Account Password Changed' , // Subject line
+                text: 'Hello world?', // plain text body
+                html: output, // html body
+                replyTo:'cms.feedback9144@gmail.com'
+            };
+        
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log("The message was sent!");
+                console.log(info);
+                res.json({success:true,msg:"Password Updated Succesfully."});
+                });
+              });
+              }
+              else if(userrole=="hod")
+              {
+                HOD.getHodByUserId(userid,function(err,usersdata){
+                  if(err) throw err;
+                  if(!usersdata)
+                  {
+                    return res.json({success:false,msg:"HOD not found."});
+                  }
+                console.log(usersdata);
+                //Send Password Change E-Mail
+                const output = `
+                <p>Dear ${upperCase(usersdata.role)},</p>
+                <p>Your password for CMS Account has been succesfully changed.</p><br><br>
+                <h3>Note</h3>
+                <p>If you Not did this please click on <a href="http://localhost:4200/forgot">forgot password</a> to change your Immidiately,Kindly Cooperate with us.</p>
+                `;
+            
+            let  transporter = nodemailer.createTransport({
+                service: 'gmail',
+                secure: false,
+                port: 25,
+                auth: {
+                user: 'cms.feedback9144@gmail.com',
+                pass: 'password.9144'
+                },
+                tls:{
+                    rejectUnauthorized:false
+                }
+            });
+        
+            // setup email data with unicode symbols
+            let mailOptions = {
+                from: '"college manager" <cms.feedback9144@gmail.com>', // sender address
+                to: usersdata.email,
+                subject: 'Regarding CMS Account Password Changed' , // Subject line
+                text: 'Hello world?', // plain text body
+                html: output, // html body
+                replyTo:'cms.feedback9144@gmail.com'
+            };
+        
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log("The message was sent!");
+                console.log(info);
+                res.json({success:true,msg:"Password Updated Succesfully."});
+                });
+              });
+              }
+              else if(userrole=="tpo")
+              {
+                TPO.getTpoByUserId(userid,function(err,usersdata){
+                  if(err) throw err;
+                  if(!usersdata)
+                  {
+                    return res.json({success:false,msg:"TPO not found."});
+                  }
+                //Send Password Change E-Mail
+                const output = `
+                <p>Dear ${upperCase(usersdata.role)},</p>
+                <p>Your password for CMS Account has been succesfully changed.</p><br><br>
+                <h3>Note</h3>
+                <p>If you Not did this please click on <a href="http://localhost:4200/forgot">forgot password</a> to change your Immidiately,Kindly Cooperate with us.</p>
+                `;
+            
+            let  transporter = nodemailer.createTransport({
+                service: 'gmail',
+                secure: false,
+                port: 25,
+                auth: {
+                user: 'cms.feedback9144@gmail.com',
+                pass: 'password.9144'
+                },
+                tls:{
+                    rejectUnauthorized:false
+                }
+            });
+        
+            // setup email data with unicode symbols
+            let mailOptions = {
+                from: '"college manager" <cms.feedback9144@gmail.com>', // sender address
+                to: usersdata.email,
+                subject: 'Regarding CMS Account Password Changed' , // Subject line
+                text: 'Hello world?', // plain text body
+                html: output, // html body
+                replyTo:'cms.feedback9144@gmail.com'
+            };
+        
+            // send mail with defined transport object
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log("The message was sent!");
+                console.log(info);
+                res.json({success:true,msg:"Password Updated Succesfully."});
+                });
+              });
+              }
+              else{
+                res.json({success:true,msg:"Password Updated Succesfully."});
+              }
             }
           });
         }

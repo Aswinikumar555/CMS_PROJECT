@@ -97,7 +97,8 @@ router.post('/send_user_req', (req, res) => {
             {
                 res.json({sucess:false,msg:"Please Provide Valid Email Id and Role"})
             }
-            else{
+            else
+            {
                 const output = `
             <p> Dear Admin, You have a new Technical Issue</p>
             <h3>Request Details</h3>

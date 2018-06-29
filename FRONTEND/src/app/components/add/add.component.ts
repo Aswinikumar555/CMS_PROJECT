@@ -121,4 +121,22 @@ export class AddComponent implements OnInit {
     else
       return false;
   }
+  addback(){
+    this.userid="";
+    this.role="";
+    this.dept="";
+    this.email="";
+    this.password="";
+    this.authService.toggleForm=false;
+    this.router.navigate(['/home']);
+  }
+  updateback()
+  {
+    this.userid="";
+    this.role="";
+    this.dept="";
+    this.email="";
+    this.authService.toggleForm=!this.authService.toggleForm;
+    this.router.navigate(['/home']);
+  }
 }

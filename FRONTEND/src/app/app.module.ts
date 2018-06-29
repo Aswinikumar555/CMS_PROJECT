@@ -60,7 +60,6 @@ var appRoutes:Routes=[
     { path:"reset", component:ResetComponent,canActivate:[AuthGuard]},
     { path:"resetpwd", component:ResetpwdComponent},
     { path:"manageusers", component:ManageusersComponent,canActivate:[AdminGuard]}
-
 ]
 
 @NgModule({
