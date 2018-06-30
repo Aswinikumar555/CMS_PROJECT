@@ -10,6 +10,9 @@ const HOD = require('../models/hodmodel');
 const TPO = require('../models/tpomodel');
 var xoauth2 = require('xoauth2');
 var store=require("store");
+const accountSid = 'AC185b0e6905c3b98ed0f49dbc1aedbda5';
+const authToken = 'a0205c20c7ab323e31d0bb286c228047';
+const client = require('twilio')(accountSid, authToken);
 
 router.get('/', function(req, res, next) {
     res.send('respond with a resource:mail');
@@ -142,12 +145,16 @@ router.post('/send_user_req', (req, res) => {
                 }
                 console.log("The message was sent!");
                 console.log(info);
-                res.json({msg:"Request Sent Successfully",success:"true"});
                 //if(req.body.message.indexOf("forgot userid")>0||req.body.message.indexOf("lost userid")>0||req.body.message.indexOf("userid")>0)
                 //Send same mail with to as reply-to in mail with auto reply in case of forgot user name
                 //is-autoreply
                 });
-
+                client.messages.create({
+                    from: '+17062568730',
+                    to: '+919494918564',
+                    body: "Dear "+userrole+", Your Request succefully sent, Regarding  "+req.body.subject+", If you not did this please write request at contact-admin"
+                  }).then((message) => console.log(message.sid));
+                  res.json({msg:"Request Sent Successfully and a Confirmation Sent your Mobile",success:"true"});
                     }
                 });
 
@@ -209,8 +216,13 @@ router.post('/send_user_req', (req, res) => {
                 }
                 console.log("The message was sent!");
                 console.log(info);
-                res.json({msg:"Request Sent Successfully",success:"true"});
                 });
+                client.messages.create({
+                    from: '+17062568730',
+                    to: '+919494918564',
+                    body: "Dear "+userrole+", Your Request succefully sent, Regarding "+req.body.subject+", If you not did this please write request at contact-admin"
+                  }).then((message) => console.log(message.sid));
+                  res.json({msg:"Request Sent Successfully and a Confirmation Sent your Mobile",success:"true"});
                     }
                 });
     }
@@ -271,9 +283,13 @@ router.post('/send_user_req', (req, res) => {
                 }
                 console.log("The message was sent!");
                 console.log(info);
-                res.json({msg:"Request Sent Successfully",success:"true"});
                 });
-
+                client.messages.create({
+                    from: '+17062568730',
+                    to: '+919494918564',
+                    body: "Dear "+userrole+", Your Request succefully sent, Regarding "+req.body.subject+", If you not did this please write request at contact-admin"
+                  }).then((message) => console.log(message.sid));
+                  res.json({msg:"Request Sent Successfully and a Confirmation Sent your Mobile",success:"true"});
                     }
                 });
     }
