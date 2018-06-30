@@ -30,7 +30,7 @@
                 </div>
                   <div class="col-md-6 mb-3 ">
                       <label for="lastName "><font color="white">Subject</font></label>
-                      <input type="text " class="form-control " name="subject" placeholder="Enter Title of your Request" [(ngModel)]="subject" required>
+                      <input type="text " class="form-control" maxlength="15" name="subject" title="Enter Short form of your request Max Characters: 15 Ex: Forgot Email-Id" placeholder="Enter Title of request Max Characters:15" [(ngModel)]="subject" required>
                       <div class="invalid-feedback ">
                           Valid Subject is required.
                       </div>

@@ -84,6 +84,7 @@ router.post('/feedback_send', (req, res) => {
 router.post('/send_user_req', (req, res) => {
     let useremail;
     var useremailoruid=req.body.emailoruid;
+    var subject=req.body.subject;
     var userrole=req.body.role;
     if(userrole=="student")
     {
@@ -152,7 +153,7 @@ router.post('/send_user_req', (req, res) => {
                 client.messages.create({
                     from: '+17062568730',
                     to: '+919494918564',
-                    body: "Dear "+userrole+", Your Request succefully sent, Regarding  "+req.body.subject+", If you not did this please write request at contact-admin"
+                    body: "Dear User,Your Request succefully sent,Regarding"+subject+",If you not did this write request at contact-admin"
                   }).then((message) => console.log(message.sid));
                   res.json({msg:"Request Sent Successfully and a Confirmation Sent your Mobile",success:"true"});
                     }
@@ -220,7 +221,7 @@ router.post('/send_user_req', (req, res) => {
                 client.messages.create({
                     from: '+17062568730',
                     to: '+919494918564',
-                    body: "Dear "+userrole+", Your Request succefully sent, Regarding "+req.body.subject+", If you not did this please write request at contact-admin"
+                    body: "Dear User,Your Request succefully sent,Regarding"+subject+",If you not did this write request at contact-admin"
                   }).then((message) => console.log(message.sid));
                   res.json({msg:"Request Sent Successfully and a Confirmation Sent your Mobile",success:"true"});
                     }
@@ -287,7 +288,7 @@ router.post('/send_user_req', (req, res) => {
                 client.messages.create({
                     from: '+17062568730',
                     to: '+919494918564',
-                    body: "Dear "+userrole+", Your Request succefully sent, Regarding "+req.body.subject+", If you not did this please write request at contact-admin"
+                    body: "Dear User,Your Request succefully sent,Regarding"+subject+",If you not did this write request at contact-admin"
                   }).then((message) => console.log(message.sid));
                   res.json({msg:"Request Sent Successfully and a Confirmation Sent your Mobile",success:"true"});
                     }
