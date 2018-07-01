@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container text-center">
     <form (submit)="onAddSubmit()" *ngIf="!toggleform">
         <div class="text-center mb-4">
             <h1 class="h3 mb-3 font-weight-normal">
@@ -38,8 +38,10 @@
                 <div class="form-group" *ngIf="isStudentOrTpoOrHod()">
                     <input type="email" name="email" [(ngModel)]="email" class="form-control" placeholder="Enter Email" required>
                 </div>
-                <input class="btn btn-lg btn-primary btn-block" type="submit" value="ADD"><br>
-                <input type="reset" value="Cancel" class="btn btn-lg btn-primary btn-block" (click)="addback()">
+                <div>
+                    <input class="btn btn-primary" type="submit" value="ADD">&nbsp;&nbsp;
+                    <input type="reset" value="Cancel" class="btn btn-primary" (click)="addback()">
+                </div>
             </div>
             <div class="col-md-4">
             </div>
@@ -86,8 +88,10 @@
                 <div class="form-group" *ngIf="isStuOrTpoOrHod()">
                     <input type="email" name="email" [(ngModel)]="selectedUser.email" class="form-control" placeholder="Enter Email" required>
                 </div>
-                <input class="btn btn-lg btn-primary btn-block" type="submit" value="UPDATE"><br>
-                <input type="reset" value="Cancel" class="btn btn-lg btn-primary btn-block" (click)="updateback()">
+                <div>
+                    <input class="btn btn-primary" type="submit" value="UPDATE">&nbsp;&nbsp;
+                    <input type="reset" value="Cancel" class="btn btn-primary" (click)="updateback()">
+                </div>
             </div>
             <div class="col-md-4">
             </div>
