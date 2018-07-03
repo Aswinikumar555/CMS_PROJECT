@@ -32,7 +32,8 @@ export class AddComponent implements OnInit,OnDestroy {
     this.compoType=this.authService.compType;
     //console.log(this.selectedUser);
   }
-  ngOnDestroy(){
+  ngOnDestroy()
+  {
       var retVal = confirm("Do you want to Leave The Page ?");
         if( retVal == true ){
           if(this.compoType=="update")
@@ -51,7 +52,7 @@ export class AddComponent implements OnInit,OnDestroy {
         //this.authService.toggleForm=!this.authService.toggleForm;
         this.router.navigate(['/add']);  
         }
-    }
+  }
   onAddSubmit(){
     var obj={
       userid: this.userid,
