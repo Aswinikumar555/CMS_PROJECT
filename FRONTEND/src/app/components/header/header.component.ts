@@ -16,8 +16,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authService:AuthService,
     private router:Router,
-    private flashmessage:FlashMessagesService,
-    private manage:ManageusersComponent
+    private flashmessage:FlashMessagesService
   ) { }
 
   ngOnInit() {
@@ -27,20 +26,8 @@ export class HeaderComponent implements OnInit {
     this.flashmessage.show("You are logged out.",{cssClass:"alert-success text-center",timeOut:2000});
   }
   getuser(){
-    console.log(this.pselect);
-    if(this.pselect=="hod"){
-      console.log("HOD Set");
-      this.authService.manageuser='hod';
-      console.log(this.authService.manageuser);
-      this.pselect=undefined;
-      this.router.navigate(['/manageusers']);
-    }
-    else if(this.pselect=="tpo"){
-      console.log("TPO Set");
-      this.authService.manageuser='tpo';
-      console.log(this.authService.manageuser);
-      this.pselect=undefined;
-      this.router.navigate(['/manageusers']);
-    }
+    this.authService.changeUserType(this.pselect);
+    localStorage.setItem('type', this.pselect.toString());
+    this.router.navigate(['/manageusers']);
   }
 }

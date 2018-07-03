@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Student } from '../models/Student';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,14 @@ export class AuthService {
   role: any;
   selectedUser:Student;
   toggleForm:boolean=false;
-  manageuser:String="";
+  compType:String;
+  private userTypesSubject$ = new Subject<any>();
+  userTypesObservable$ = this.userTypesSubject$.asObservable();
   constructor(private http:Http,public jwtHelper: JwtHelperService,private router:Router) { }
+
+  changeUserType(type: String){
+    this.userTypesSubject$.next(type);
+  }
 
   //users apis
   addUser(user){
@@ -55,7 +62,7 @@ export class AuthService {
 
   
   //students apis
-  deleteStudent(userid){
+  deleteUser(userid){
     return this.http.delete("http://localhost:3000/student/delete/"+userid)
       .map(res =>  res.json());
   }
@@ -128,18 +135,6 @@ export class AuthService {
   {
     const token = localStorage.getItem('id_token');
     this.authToken = token;
-  }
-  loadhod(){
-    if(this.manageuser=='hod')
-        return true;
-    else
-      return false;
-  }
-  loadtpo(){
-    if(this.manageuser=='tpo')
-        return true;
-    else
-      return false;
   }
 
   storeUserData(token,user){

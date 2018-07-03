@@ -54,6 +54,7 @@
               <th>DOB</th>
               <th>Year</th>
               <th>Department</th>
+              <th>Email Address</th>
               <th *ngIf="authService.adminLoggedIn()">Opearation</th>
               <th *ngIf="authService.adminLoggedIn()">Opearation</th>
           </tr>
@@ -69,6 +70,7 @@
               <td>{{rec.dob}}</td>
               <td>{{rec.year}}</td>
               <td>{{rec.dept}}</td>
+              <td>{{rec.email}}</td>
               <td *ngIf="authService.adminLoggedIn()"><input type="button" (click)="deletestudent(rec)" value="Delete" class="btn btn-danger"></td>
               <td *ngIf="authService.adminLoggedIn()"><a class="nav-link" [routerLink]="['/add']"><input type="button" (click)="updatestudent(rec)" value="Update" class="btn btn-primary"></a></td>
           </tr>
@@ -278,7 +280,6 @@
 <!--Table-->
 <button class="text-center btn btn-md btn-success" style="float:right;margin-bottom:4px;" (click)="tableToExcel('testTable', 'Student_List', 'myfile.xls')" value="Export">Export</button>
 <table id="testTable" class="table text-white">
-
         <!--Table head-->
         <thead>
             <tr>

@@ -84,10 +84,12 @@ export class SearchComponent implements OnInit {
  selectyears(ev){
   if(ev.currentTarget.checked){
     this.tpoyears.push(ev.target.defaultValue);
-    console.log("TPO Years: "+this.tpoyears);}
+    console.log("TPO Years: "+this.tpoyears);
+    this.tpoyears=this.tpoyears;}
   else{
     var out=this.tpoyears.splice(this.tpoyears.indexOf(ev.target.defaultValue),1);
     console.log("TPO Years: "+this.tpoyears);
+    this.tpodepts=this.tpodepts;
   }
 }
 
@@ -102,6 +104,8 @@ onSearchClick(){
     if(this.tpodepts.length==0&&this.tpoyears.length==0){
       this.tpoResult=[];
       this.tpotable=false;
+      this.tpodepts=this.tpodepts;
+      this.tpoyears=this.tpoyears;
       return;
     }
     this.searchService.tpoSearch(JSON.stringify(this.tpodepts),JSON.stringify(this.tpoyears),JSON.stringify(this.minaggrigt))
@@ -121,7 +125,7 @@ onSearchClick(){
 
 deletestudent(student){
   console.log(student);
-  this.authService.deleteStudent(student.userid).subscribe(data=>{
+  this.authService.deleteUser(student.userid).subscribe(data=>{
     if(data.success){
       this.flashmessage.show("student record deleted",{cssClass:'alert-success text-center',timeOut:2000});
       this.students.splice(this.students.indexOf(student),1)

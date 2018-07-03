@@ -4,7 +4,7 @@ import { Tpo } from '../../models/tpo';
 import { AuthService } from '../../services/auth.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
-import { NavigationEnd } from '@angular/router';
+
 
 @Component({
   selector: 'app-manageusers',
@@ -12,67 +12,70 @@ import { NavigationEnd } from '@angular/router';
   styleUrls: ['./manageusers.component.css']
 })
 export class ManageusersComponent implements OnInit {
-  hods: Hod[];
-  tpos:Tpo[];
-  
-
+  users: any = [];
+  type:String;
+  usertype:String;
   constructor(private authService:AuthService,
     private flashmessage:FlashMessagesService,
     private router:Router) {
-      router.events.subscribe(event => {
-        if (event instanceof NavigationEnd) {
-          this.ngOnInit();
-        }
-        // Instance of should be: 
-        // NavigationEnd
-        // NavigationCancel
-        // NavigationError
-        // RoutesRecognized
-      });
      }
-
-  ngOnInit() {
-    console.log("mange"+this.authService.manageuser);
-    console.log(this.authService.loadhod())
-    if(this.authService.loadhod())
-    {
-      console.log("come to this area HOD");
+  ngOnInit() 
+  {
+    const type : String = localStorage.getItem('type');
+    if(this.type){
+      this.getUsers(this.type);
+      localStorage.removeItem('type');
+    }
+    this.authService.userTypesObservable$.subscribe(
+      (type: String) => {
+         this.getUsers(type);
+      }
+    )
+  }
+  hodcomp(type:String){
+    if(type=="hod"){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  getUsers(type: String){
+    this.hodcomp(type);
+    this.usertype=type+"s";
+    this.users = [];
+    type === 'hod' ? this.managehod() : ( type === 'tpo' ? this.managetpo() : '') 
+  }
+  managehod(){
+    console.log("come to this area HOD");
       this.authService.gethods()
       .subscribe(results =>{
         console.log(results);
         if(results.length==0){
           this.flashmessage.show("No result found.",{cssClass:'alert-danger text-center',timeOut:2000});
-          this.hods=[];
-          this.ngOnInit();
         }else{
-          this.hods=results;
-          //this.ngOnInit();
+          this.users=results;
         }
       });
-    }
-    else if(this.authService.loadtpo())
-    {
-      console.log("come to this area TPO");
+  }
+  managetpo(){
+    console.log("come to this area TPO");
       this.authService.gettpos()
       .subscribe(results =>{
         console.log(results);
         if(results.length==0){
           this.flashmessage.show("No result found.",{cssClass:'alert-danger text-center',timeOut:2000});
-          this.tpos=[];
-          this.ngOnInit();
         }else{
-          this.tpos=results;
-          //this.ngOnInit();
+          this.users=results;
         }
       });
-    }
   }
-  deletehod(hod){
+  delete(hod){
     console.log(hod);
-    this.authService.deleteStudent(hod.userid).subscribe(data=>{
+    this.authService.deleteUser(hod.userid).subscribe(data=>{
       if(data.success){
         this.flashmessage.show("student record deleted",{cssClass:'alert-success text-center',timeOut:2000});
-        this.hods.splice(this.hods.indexOf(hod),1)
+        this.users.splice(this.users.indexOf(hod),1)
       }
       else
       {
@@ -81,26 +84,9 @@ export class ManageusersComponent implements OnInit {
       }
     })
   }
-  updatehod(hod){
+  update(hod){
       this.authService.selectedUser=hod;
       this.authService.toggleForm=!this.authService.toggleForm;
     }
-    deletetpo(tpo){
-      console.log(tpo);
-      this.authService.deleteStudent(tpo.userid).subscribe(data=>{
-        if(data.success){
-          this.flashmessage.show("student record deleted",{cssClass:'alert-success text-center',timeOut:2000});
-          this.tpos.splice(this.tpos.indexOf(tpo),1)
-        }
-        else
-        {
-          console.log(data);
-          this.flashmessage.show("Something went wrong.",{cssClass:'alert-danger text-center',timeOut:2000});
-        }
-      })
-    }
-    updatetpo(tpo){
-        this.authService.selectedUser=tpo;
-        this.authService.toggleForm=!this.authService.toggleForm;
-      }
+   
 }
