@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { Student } from '../../models/student';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { SearchService } from '../../services/search.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -22,7 +23,8 @@ export class SearchComponent implements OnInit {
 
   constructor(private authService:AuthService,
   private flashmessage:FlashMessagesService,
-  private searchService:SearchService
+  private searchService:SearchService,
+  private router:Router
 ) { }
 
   ngOnInit() {
@@ -125,17 +127,27 @@ onSearchClick(){
 
 deletestudent(student){
   console.log(student);
-  this.authService.deleteUser(student.userid).subscribe(data=>{
-    if(data.success){
-      this.flashmessage.show("student record deleted",{cssClass:'alert-success text-center',timeOut:2000});
-      this.students.splice(this.students.indexOf(student),1)
-    }
-    else
-    {
-      console.log(data);
-      this.flashmessage.show("Something went wrong.",{cssClass:'alert-danger text-center',timeOut:2000});
-    }
-  })
+  var retVal = confirm("Are you sure to Delete?");
+        if( retVal == true)
+        {
+          this.authService.deleteUser(student.userid).subscribe(data=>{
+            if(data.success){
+              this.flashmessage.show("student record deleted",{cssClass:'alert-success text-center',timeOut:2000});
+              this.students.splice(this.students.indexOf(student),1)
+            }
+            else
+            {
+              console.log(data);
+              this.flashmessage.show("Something went wrong.",{cssClass:'alert-danger text-center',timeOut:2000});
+            }
+          })
+        }
+        else
+        {
+        console.log ("Admin doesn't want to Delete!");
+        //this.authService.toggleForm=!this.authService.toggleForm;
+        this.router.navigate(['/search']);  
+        }
 }
 updatestudent(student){
     this.authService.selectedUser=student;

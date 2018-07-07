@@ -8,7 +8,7 @@
                 <th>#</th>
                 <th>userID</th>
                 <th>Name</th>
-                <th>QUALIFICATION</th>
+                <th>Qualification</th>
                 <th>Phone</th>
                 <th *ngIf="hodcomp()">Department</th>
                 <th>E-Mail</th>
@@ -26,8 +26,8 @@
                 <td>{{rec.name}}</td>
                 <td>{{rec.qualification}}</td>
                 <td>{{rec.phone}}</td>
-                <td>{{rec.email}}</td>
                 <td *ngIf="hodcomp()">{{rec.dept}}</td>
+                <td>{{rec.email}}</td>
                 <td *ngIf="authService.adminLoggedIn()"><input type="button" (click)="delete(rec)" value="Delete" class="btn btn-danger"></td>
                 <td *ngIf="authService.adminLoggedIn()"><a class="nav-link" [routerLink]="['/add']"><input type="button" (click)="update(rec)" value="Update" class="btn btn-primary"></a></td>
             </tr>

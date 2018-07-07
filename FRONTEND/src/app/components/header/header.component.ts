@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Router } from '@angular/router';
-import { ManageusersComponent } from '../manageusers/manageusers.component';
 
 @Component({
-  providers:[ManageusersComponent],
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
