@@ -32,3 +32,7 @@ const PostSchema = mongoose.Schema ({
 });
 
 const POSTS = module.exports = mongoose.model("notifications",PostSchema);
+
+module.exports.getPostByPostId = function(userid,callback){
+  POSTS.findOne({_id:userid},callback);
+}

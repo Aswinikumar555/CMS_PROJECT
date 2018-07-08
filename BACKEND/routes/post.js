@@ -54,7 +54,8 @@ router.post('/sendpost', (req, res) => {
 
 router.get('/postsforhods/:dept',function(req,res)
 {
-    var quary= {$or:[ {dept:'all'},{dept:req.params.dept}]};
+    //var quary= {$or:[ {dept:'all'},{dept:req.params.dept}]}; //To get TPO and HOD posts as well
+    var quary= {$and:[ {prole:'hod'},{dept:req.params.dept}]}; // To get only HOD Posts
     POSTS.find(quary,function(err,posts){
         if(err){
             return res.json({"error":err});}
@@ -105,6 +106,82 @@ router.get('/postsfortpos',function(req,res)
             }
    });
   });
+
+  //Delete Users
+router.delete('/deleteposts/:postid', function(req, res, next) {
+    POSTS.getPostByPostId(req.params.postid,function(err,user){
+      if(err)
+      {
+        res.json({"error":err});
+      }
+      else if(!user){
+       res.json({success:false,msg:"Post Not Found"});
+      }
+      else 
+      {
+        POSTS.remove({_id:req.params.postid},function(err,result){
+          if(err){
+            res.json(err);}
+          else if(result.n==1){
+            //res.json({success:true,msg:"Deleted in All Users"}); 
+            res.json({success:true,msg:"POST Delted Succesfully"}); 
+              }
+          else{
+            res.json({success:false,msg:"Something Went Wrong"});
+          }
+          
+    });
+    }
+  });
+});
   
+  //Update Admin
+  router.put('/updateposts/:postid', function(req, res, next) {
+    POSTS.getPostByPostId(req.params.postid,function(err,user){
+      //console.log(user);
+      if(err)
+      {
+        res.json({"error":err});
+      }
+      else if(!user){
+       res.json({success:false,msg:"POST Not Found"});
+      }
+      else 
+      {
+        var now=new Date();
+        var newpost={
+            postedby:req.body.postedby,
+            postedon:now,
+            title:req.body.title,
+            content:req.body.content,
+            year:req.body.year,
+            dept:req.body.dept,
+            prole:req.body.prole
+        };
+
+        //console.log(req.file.path);
+        //console.log(user);
+          POSTS.update({_id:req.params.postid},newpost,function(err,result){
+            if(err)
+            {
+              console.log(err);
+              res.json(err);
+            }
+            else if(result.n==1)
+            {
+              //res.json({success:true,msg:"Profile Updated Succesfully"});
+              console.log(result); 
+                  res.json({success:true,msg:"updated succesfully"});
+                  console.log(result); 
+            }
+            else
+            {
+                  console.log(reslt);
+                  res.json({success:false,msg:JSON.stringify(result)});
+            }
+        });
+    }
+    });
+});
 
 module.exports = router;

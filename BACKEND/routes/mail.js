@@ -86,7 +86,7 @@ router.post('/send_user_req', (req, res) => {
     var useremailoruid=req.body.emailoruid;
     var subject=req.body.subject;
     var userrole=req.body.role;
-    if(userrole=="student")
+    if(userrole=='student')
     {
         Student.findOne({ $or: [ { email: useremailoruid }, {userid:useremailoruid } ] },function(err,user){
             useremail=user.email;
@@ -155,12 +155,60 @@ router.post('/send_user_req', (req, res) => {
                     to: '+919494918564',
                     body: "Dear User,Your Request succefully sent,Regarding"+subject+",If you not did this write request at contact-admin"
                   }).then((message) => console.log(message.sid));
-                  res.json({msg:"Request Sent Successfully and a Confirmation Sent your Mobile",success:"true"});
-                    }
+                  //Sending Confirmation to user e-mail
+                  const output1 = `
+            <p>Dear Student, Your Request Confirmation</p>
+            <h3>Request Details</h3>
+            <ul>  
+                <li>Role: ${req.body.role}</li>
+                <li>User Id or E-mail: ${useremailoruid}</li>
+                <li>Subject: ${req.body.subject}</li>
+            </ul>
+            <h3>User Request</h3>
+            <p>${req.body.message}</p>
+            <h4>Note:</h4>
+            <p>If not did this please write a request at <a href="http://locahost:4200/contactadmin"> contact-admin </a></p>
+            `;
+            
+            let  transporter1 = nodemailer.createTransport({
+                service: 'gmail',
+                secure: false,
+                port: 25,
+                auth: {
+                user: 'cms.feedback9144@gmail.com',
+                pass: 'password.9144'
+                },
+                tls:{
+                    rejectUnauthorized:false
+                }
+            });
+        
+            // setup email data with unicode symbols
+            let mailOptions1 = {
+                from: '"college manager" <cms.feedback9144@gmail.com>', // sender address
+                to: useremail, // list of receivers
+                subject: req.body.subject , // Subject line
+                text: 'Hello world?', // plain text body
+                html: output1, // html body
+                replyTo:useremail
+            };
+        
+            // send mail with defined transport object
+            transporter1.sendMail(mailOptions1, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log("The message was sent!");
+                console.log(info);
+                //if(req.body.message.indexOf("forgot userid")>0||req.body.message.indexOf("lost userid")>0||req.body.message.indexOf("userid")>0)
+                //Send same mail with to as reply-to in mail with auto reply in case of forgot user name
+                //is-autoreply
                 });
-
+                res.json({msg:"Request Sent Successfully and a Confirmation Sent your Mobile and E-mail",success:"true"});
+                }
+                });
     }
-    else if(userrole=="hod")
+    else if(userrole=='hod')
     {
         HOD.findOne({ $or: [ { email: useremailoruid }, {userid:useremailoruid } ] },function(err,user){
             useremail=user.email;
@@ -223,11 +271,60 @@ router.post('/send_user_req', (req, res) => {
                     to: '+919494918564',
                     body: "Dear User,Your Request succefully sent,Regarding"+subject+",If you not did this write request at contact-admin"
                   }).then((message) => console.log(message.sid));
-                  res.json({msg:"Request Sent Successfully and a Confirmation Sent your Mobile",success:"true"});
+                  //Sending Confirmation to user e-mail
+                  const output1 = `
+            <p>Dear HOD, Your Request Confirmation</p>
+            <h3>Request Details</h3>
+            <ul>  
+                <li>Role: ${req.body.role}</li>
+                <li>User Id or E-mail: ${useremailoruid}</li>
+                <li>Subject: ${req.body.subject}</li>
+            </ul>
+            <h3>User Request</h3>
+            <p>${req.body.message}</p>
+            <h4>Note:</h4>
+            <p>If not did this please write a request at <a href="http://locahost:4200/contactadmin"> contact-admin </a></p>
+            `;
+            
+            let  transporter1 = nodemailer.createTransport({
+                service: 'gmail',
+                secure: false,
+                port: 25,
+                auth: {
+                user: 'cms.feedback9144@gmail.com',
+                pass: 'password.9144'
+                },
+                tls:{
+                    rejectUnauthorized:false
+                }
+            });
+        
+            // setup email data with unicode symbols
+            let mailOptions1 = {
+                from: '"college manager" <cms.feedback9144@gmail.com>', // sender address
+                to: useremail, // list of receivers
+                subject: req.body.subject , // Subject line
+                text: 'Hello world?', // plain text body
+                html: output1, // html body
+                replyTo:useremail
+            };
+        
+            // send mail with defined transport object
+            transporter1.sendMail(mailOptions1, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log("The message was sent!");
+                console.log(info);
+                //if(req.body.message.indexOf("forgot userid")>0||req.body.message.indexOf("lost userid")>0||req.body.message.indexOf("userid")>0)
+                //Send same mail with to as reply-to in mail with auto reply in case of forgot user name
+                //is-autoreply
+                });
+                res.json({msg:"Request Sent Successfully and a Confirmation Sent your Mobile and E-mail",success:"true"});
                     }
                 });
     }
-    else if(userrole=="tpo")
+    else if(userrole=='tpo')
     {
         TPO.find({ $or: [ { email: useremailoruid }, {userid:useremailoruid } ] },function(err,user){
             useremail=user.email;
@@ -290,7 +387,56 @@ router.post('/send_user_req', (req, res) => {
                     to: '+919494918564',
                     body: "Dear User,Your Request succefully sent,Regarding"+subject+",If you not did this write request at contact-admin"
                   }).then((message) => console.log(message.sid));
-                  res.json({msg:"Request Sent Successfully and a Confirmation Sent your Mobile",success:"true"});
+                  //Sending Confirmation to user e-mail
+                  const output1 = `
+            <p>Dear TPO, Your Request Confirmation</p>
+            <h3>Request Details</h3>
+            <ul>  
+                <li>Role: ${req.body.role}</li>
+                <li>User Id or E-mail: ${useremailoruid}</li>
+                <li>Subject: ${req.body.subject}</li>
+            </ul>
+            <h3>User Request</h3>
+            <p>${req.body.message}</p>
+            <h4>Note:</h4>
+            <p>If not did this please write a request at <a href="http://locahost:4200/contactadmin"> contact-admin </a></p>
+            `;
+            
+            let  transporter1 = nodemailer.createTransport({
+                service: 'gmail',
+                secure: false,
+                port: 25,
+                auth: {
+                user: 'cms.feedback9144@gmail.com',
+                pass: 'password.9144'
+                },
+                tls:{
+                    rejectUnauthorized:false
+                }
+            });
+        
+            // setup email data with unicode symbols
+            let mailOptions1 = {
+                from: '"college manager" <cms.feedback9144@gmail.com>', // sender address
+                to: useremail, // list of receivers
+                subject: req.body.subject , // Subject line
+                text: 'Hello world?', // plain text body
+                html: output1, // html body
+                replyTo:useremail
+            };
+        
+            // send mail with defined transport object
+            transporter1.sendMail(mailOptions1, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log("The message was sent!");
+                console.log(info);
+                //if(req.body.message.indexOf("forgot userid")>0||req.body.message.indexOf("lost userid")>0||req.body.message.indexOf("userid")>0)
+                //Send same mail with to as reply-to in mail with auto reply in case of forgot user name
+                //is-autoreply
+                });
+                res.json({msg:"Request Sent Successfully and a Confirmation Sent your Mobile and E-mail",success:"true"});
                     }
                 });
     }

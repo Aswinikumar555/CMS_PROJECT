@@ -36,6 +36,14 @@ export class PostService {
     return this.http.post("http://localhost:3000/post/sendpost",postObj,{headers:headers})
     .map(res => res.json());
   }
+  updateNotification(postid,postObj){
+    return this.http.put("http://localhost:3000/post/updateposts/"+postid,postObj)
+    .map(res =>  res.json());
+  }
+  deleteNotification(postid){
+    return this.http.delete("http://localhost:3000/post/deleteposts/"+postid)
+    .map(res =>  res.json());
+  }
 
   getPostsByRole(dept,year,role){
     return this.http.get("http://localhost:3000/post/postsbyrole/" + dept + "/" + year + "/" + role)
